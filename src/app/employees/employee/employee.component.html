@@ -1,7 +1,7 @@
 <div class="jumbotron">
   <h2 class="text-center">Form</h2>
   <form #employeeForm="ngForm" autocomplete="off" (ngSubmit)="onSubmit(employeeForm)">
-  
+    <input type="hidden" name="ID" #ID="ngModel" [(ngModel)]="employeeService.formEmployee.ID">
     <div class="form-group">
       <label for="fullName">Full Name</label>
       <input name="fullName" #fullName="ngModel" [(ngModel)]="employeeService.formEmployee.FullName"

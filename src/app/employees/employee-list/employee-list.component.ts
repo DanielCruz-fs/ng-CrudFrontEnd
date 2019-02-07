@@ -17,7 +17,8 @@ export class EmployeeListComponent implements OnInit {
   }
 
   populateForm(employee: Employee) {
-    this.employeeService.formEmployee = employee;
+    /**breaks two way data binding */
+    this.employeeService.formEmployee = Object.assign({}, employee);
   }
 
 }

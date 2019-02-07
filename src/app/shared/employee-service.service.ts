@@ -13,14 +13,17 @@ export class EmployeeServiceService {
 
   constructor(private http: HttpClient) { }
 
-  postEmployee(data: Employee) {
-    return this.http.post(`${this.url}/Employee`, data);
-  }
-
   getEmployees() {
     this.http.get(`${this.url}/Employee`).subscribe((data: Employee[]) => {
       this.employees = data;
     });
   }
+  
+  postEmployee(data: Employee) {
+    return this.http.post(`${this.url}/Employee`, data);
+  }
 
+  putEmployee(data: Employee) {
+    return this.http.put(`${this.url}/Employee/${data.ID}`, data);
+  }
 }

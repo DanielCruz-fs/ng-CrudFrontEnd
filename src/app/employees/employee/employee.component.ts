@@ -31,9 +31,27 @@ export class EmployeeComponent implements OnInit {
   }
   
   onSubmit(employeeForm: NgForm) {
+    if (employeeForm.value.ID == null) {
+      this.insertEmployee(employeeForm);
+    } else {
+      this.updateEmployee(employeeForm);
+    }
+  }
+
+  insertEmployee(employeeForm: NgForm) {
     this.employeeService.postEmployee(employeeForm.value).subscribe((data: Employee) => {
       this.employeeService.employees.push(data);
       this.toastr.success('New employee added', 'CRUD API');
+      this.resetForm(employeeForm);
+      console.log(data);
+    });
+  }
+
+  updateEmployee(employeeForm: NgForm) {
+    this.employeeService.putEmployee(employeeForm.value).subscribe((data: Employee) => {
+      let foundEmpIndex = this.employeeService.employees.findIndex(i => i.ID == data.ID);
+      this.employeeService.employees[foundEmpIndex] = data;
+      this.toastr.warning('Employee updated', 'CRUD API');
       this.resetForm(employeeForm);
       console.log(data);
     });
