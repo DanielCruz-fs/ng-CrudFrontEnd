@@ -1,4 +1,7 @@
+import { Employee } from 'src/app/shared/employee.model';
 import { Component, OnInit } from '@angular/core';
+import { EmployeeServiceService } from 'src/app/shared/employee-service.service';
+
 
 @Component({
   selector: 'app-employee-list',
@@ -6,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-
-  constructor() { }
+  
+  constructor(public employeeService: EmployeeServiceService) { }
 
   ngOnInit() {
+    this.employeeService.getEmployees();
+  }
+
+  populateForm(employee: Employee) {
+    this.employeeService.formEmployee = employee;
   }
 
 }

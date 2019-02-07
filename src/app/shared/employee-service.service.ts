@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EmployeeServiceService {
+  employees: Employee[] = [];
   formEmployee: Employee;
   readonly url: string = 'http://localhost:64420/api';
 
@@ -15,4 +16,11 @@ export class EmployeeServiceService {
   postEmployee(data: Employee) {
     return this.http.post(`${this.url}/Employee`, data);
   }
+
+  getEmployees() {
+    this.http.get(`${this.url}/Employee`).subscribe((data: Employee[]) => {
+      this.employees = data;
+    });
+  }
+
 }

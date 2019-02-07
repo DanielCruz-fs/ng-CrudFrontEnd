@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeServiceService } from 'src/app/shared/employee-service.service';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Employee } from 'src/app/shared/employee.model';
 
 @Component({
   selector: 'app-employee',
@@ -9,7 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeeComponent implements OnInit {
 
-  constructor(public employeeService: EmployeeServiceService) { }
+  constructor(public employeeService: EmployeeServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.resetForm();
@@ -29,7 +31,9 @@ export class EmployeeComponent implements OnInit {
   }
   
   onSubmit(employeeForm: NgForm) {
-    this.employeeService.postEmployee(employeeForm.value).subscribe(data => {
+    this.employeeService.postEmployee(employeeForm.value).subscribe((data: Employee) => {
+      this.employeeService.employees.push(data);
+      this.toastr.success('New employee added', 'CRUD API');
       this.resetForm(employeeForm);
       console.log(data);
     });
